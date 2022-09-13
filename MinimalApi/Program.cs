@@ -1,17 +1,47 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+// Add Keycloak authorization
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, o =>
+{
+    o.RequireHttpsMetadata = false;
+    o.Authority = builder.Configuration["Keycloak:AuthorityUrl"];
+    o.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateAudience = false,
+        ValidAudience = builder.Configuration["Keycloak:ClientId"],
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Keycloak:AuthorityUrl"],
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero,
+    };
+});
+builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapGet("/", () => "Minimal Api Documents is working!");
 
-app.MapGet("/documents", async (DataContext db) =>
+app.MapGet("/documents", [Authorize] async (DataContext db) =>
     await db.Doucments.ToListAsync());
 
 app.MapGet("/documents/{id}", async (int id, DataContext db) =>
