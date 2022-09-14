@@ -1,0 +1,43 @@
+﻿@page "/documents"
+
+<h3>Documents</h3>
+@inject HttpClient Http
+
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+        Data="@documents" TItem="Documemnt" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+        <Columns>
+            <RadzenDataGridColumn TItem="Documemnt" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn TItem="Documemnt" Property="Index" Title="Index" Width="160px" />
+            <RadzenDataGridColumn TItem="Documemnt" Property="Title" Title="Title" Width="160px"/>
+            <RadzenDataGridColumn TItem="Documemnt" Property="Subject" Title="Subject" Width="200px" />
+            <RadzenDataGridColumn TItem="Documemnt" Property="Company" Title="Company" Width="120px" />
+            <RadzenDataGridColumn TItem="Documemnt" Property="Date" Title="Date" FormatString="{0:d}" Width="160px" />
+            <RadzenDataGridColumn TItem="Documemnt" Property="Amount" Title="Amount" FormatString="{0:d}" Width="160px" />
+            <RadzenDataGridColumn TItem="Documemnt" Property="Currency" Title="Currency" Width="200px" />
+            <RadzenDataGridColumn TItem="Documemnt" Property="Author" Title="Author" Width="160px" />
+        </Columns>
+    </RadzenDataGrid>
+    
+@code {
+
+    class Documemnt
+    {
+        public int Id { get; set; }
+        public string? Index { get; set; }
+        public string? Title { get; set; }
+        public string? Subject { get; set; }
+        public string? Company { get; set; }
+        public DateTime Date { get; set; }
+        public int Amount { get; set; }
+        public string? Currency { get; set; }
+        public string? Author { get; set; }
+    }
+    List<Documemnt>? documents = new() {
+        new() { Id = 1, Index = "2022/1", Title = "Test title", Subject = "It is a long established fact that a reader will be distracted", Company = "CANPACK", Date = DateTime.Now, Amount = 2500, Currency = "USD", Author = "john.doe" }
+    };
+
+    @* protected override void OnInitialized()
+    {
+        // documents = await Http.GetFromJsonAsync<Documemnt[]>("https://localhost:5001/documents");
+    } *@
+}

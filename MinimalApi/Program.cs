@@ -8,6 +8,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddCors();
+
 // Add Keycloak authorization
 builder.Services.AddAuthentication(options =>
 {
@@ -36,12 +38,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/", () => "Minimal Api Documents is working!");
 
-app.MapGet("/documents", [Authorize] async (DataContext db) =>
+app.MapGet("/documents", async (DataContext db) =>
     await db.Doucments.ToListAsync());
 
 app.MapGet("/documents/{id}", async (int id, DataContext db) =>
