@@ -1,0 +1,69 @@
+﻿@page "/documents"
+
+@inject IDocumentService DocumemntService
+@inject NavigationManager NavigationManager
+@inject DialogService DialogService
+
+
+    <RadzenCard Style="width: fit-content; width:100%" Class="mt-3 mb-3 mx-auto">
+        <RadzenMenu>
+            <RadzenMenuItem Click="CreateButtonClick" Text="Create" Icon="note_add" />
+        </RadzenMenu>
+    </RadzenCard>
+
+    <h2>Documents</h2>
+
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" Style="min-height:240px"
+        AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true" IsLoading="@isLoading"
+        Data="@documents" TItem="Document" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+        <Columns>
+            <RadzenDataGridColumn TItem="Document" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn TItem="Document" Property="Index" Title="Index" Width="120px" />
+            <RadzenDataGridColumn TItem="Document" Property="Title" Title="Title" Width="200px">
+                <Template Context="data">                          
+                        <p style="white-space:pre-wrap">@data.Title</p>
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Document" Property="Subject" Title="Subject" Width="340px">
+                <Template Context="data">                          
+                        <p style="white-space:pre-wrap">@data.Subject</p>
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Document" Property="Company" Title="Company" Width="120px" />
+            <RadzenDataGridColumn TItem="Document" Property="Date" Title="Date" FormatString="{0:d}" Width="120px" />
+            <RadzenDataGridColumn TItem="Document" Property="Amount" Title="Amount" FormatString="{0:d}" Width="160px" />
+            <RadzenDataGridColumn TItem="Document" Property="Currency" Title="Currency" Width="120px" />
+            <RadzenDataGridColumn TItem="Document" Property="Author" Title="Author" Width="160px" />
+            <RadzenDataGridColumn Width="160px" TItem="Document" Property="Id" Title="">
+                <Template Context="data">
+                    <button type="button" class="btn btn-primary btn-sm" @onclick="(() => EditButtonClick(data.Id))">Edit</button>
+                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+
+
+    
+@code {
+    List<Document>? documents = new ();
+    bool isLoading;
+
+    protected override async Task OnInitializedAsync()
+    { 
+        isLoading = true;
+        documents = await DocumemntService.GetDocuments();
+        await Task.Delay(2000);
+        isLoading = false;
+    }
+
+    protected void CreateButtonClick(MenuItemEventArgs args)
+    {
+        NavigationManager.NavigateTo("edit-document");
+    }
+    
+    protected void EditButtonClick(int id)
+    {
+        NavigationManager.NavigateTo($"edit-document/{id}");
+    }
+}

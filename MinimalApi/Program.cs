@@ -8,6 +8,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddCors();
+
 // Add Keycloak authorization
 builder.Services.AddAuthentication(options =>
 {
@@ -36,21 +38,23 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/", () => "Minimal Api Documents is working!");
 
-app.MapGet("/documents", [Authorize] async (DataContext db) =>
-    await db.Doucments.ToListAsync());
+app.MapGet("/documents", async (DataContext db) =>
+    await db.Doucments.OrderByDescending(x => x.Id).ToListAsync());
 
 app.MapGet("/documents/{id}", async (int id, DataContext db) =>
     await db.Doucments.FindAsync(id)
-        is Documemnt document
+        is Document document
             ? Results.Ok(document)
             : Results.NotFound());
 
-app.MapPost("/documents", async (Documemnt document, DataContext db) =>
+app.MapPost("/documents", async (Document document, DataContext db) =>
 {
     db.Doucments.Add(document);
     await db.SaveChangesAsync();
@@ -58,7 +62,7 @@ app.MapPost("/documents", async (Documemnt document, DataContext db) =>
     return Results.Created($"/documents/{document.Id}", document);
 });
 
-app.MapPut("/documents/{id}", async (int id, Documemnt inputDocument, DataContext db) =>
+app.MapPut("/documents/{id}", async (int id, Document inputDocument, DataContext db) =>
 {
     var document = await db.Doucments.FindAsync(id);
 
@@ -80,7 +84,7 @@ app.MapPut("/documents/{id}", async (int id, Documemnt inputDocument, DataContex
 
 app.MapDelete("/documents/{id}", async (int id, DataContext db) =>
 {
-    if (await db.Doucments.FindAsync(id) is Documemnt documemnt)
+    if (await db.Doucments.FindAsync(id) is Document documemnt)
     {
         db.Doucments.Remove(documemnt);
         await db.SaveChangesAsync();
@@ -98,7 +102,7 @@ if (app.Environment.IsDevelopment())
 
 app.Run();
 
-class Documemnt
+class Document
 {
     public int Id { get; set; }
     public string? Index { get; set; }
@@ -116,5 +120,5 @@ class DataContext : DbContext
     public DataContext(DbContextOptions<DataContext> options)
         : base(options) { }
 
-    public DbSet<Documemnt> Doucments => Set<Documemnt>();
+    public DbSet<Document> Doucments => Set<Document>();
 }
