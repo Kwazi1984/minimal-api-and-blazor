@@ -35,7 +35,7 @@ namespace BlazorApp.Services
 
         public async Task DeleteDocument(int id)
         {
-            await _http.DeleteAsync($"/documents/{id}");
+            await _http.DeleteAsync(_baseUrl + $"/documents/{id}");
         }
     }
 }
