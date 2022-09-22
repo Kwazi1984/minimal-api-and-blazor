@@ -11,6 +11,13 @@
 }
 else 
 {
+    <RadzenCard Style="width: fit-content; width:100%" Class="mt-3 mb-3 mx-auto">
+        <RadzenMenu>
+            <RadzenMenuItem Text="Save" Icon="save" />
+            <RadzenMenuItem Text="Cancel" Icon="close" Click="CancelButtonClick" />
+        </RadzenMenu>
+    </RadzenCard>
+
     @if (Id == null)
     {
         <h2>Create Document</h2>
