@@ -27,7 +27,10 @@ else
         <h2>Update Document</h2>
     }
 
-    <EditForm Model="doucment" OnSubmit="HandleSubmit" IsLoading="true">
+    <EditForm Model="doucment" OnValidSubmit="HandleSubmit" IsLoading="true">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+  
         <div>
             <label for="index">Index</label>
             <InputText id="index" @bind-Value="doucment!.Index" class="form-control"></InputText>
@@ -55,6 +58,7 @@ else
         <div>
             <label for="currency">Currency</label>
             <InputSelect id="currency" @bind-Value="doucment.Currency" class="form-control">
+                <option value=""></option>
                 <option value="EUR">EUR</option>
                 <option value="USD">USD</option>
                 <option value="PLN">PLN</option>
