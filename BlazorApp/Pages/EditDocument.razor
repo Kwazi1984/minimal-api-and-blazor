@@ -11,23 +11,24 @@
 }
 else 
 {
-    <RadzenCard Style="width: fit-content; width:100%" Class="mt-3 mb-3 mx-auto">
-        <RadzenMenu>
-            <RadzenMenuItem Text="Save" Icon="save" />
-            <RadzenMenuItem Text="Cancel" Icon="close" Click="CancelButtonClick" />
-        </RadzenMenu>
-    </RadzenCard>
+    <EditForm Model="doucment" Context="DocumentForm">
+        
+        <RadzenCard Style="width: fit-content; width:100%" Class="mt-3 mb-3 mx-auto">
+            <RadzenMenu> 
+                <RadzenMenuItem Text="Save" Icon="save" Click="@(async () => await ValidateForm(DocumentForm))" />
+                <RadzenMenuItem Text="Cancel" Icon="close" Click="CancelButtonClick" />
+            </RadzenMenu>
+        </RadzenCard>
 
-    @if (Id == null)
-    {
-        <h2>Create Document</h2>
-    }
-    else
-    {
-        <h2>Update Document</h2>
-    }
+        @if (Id == null)
+        {
+            <h2>Create Document</h2>
+        }
+        else
+        {
+            <h2>Update Document</h2>
+        }
 
-    <EditForm Model="doucment" OnValidSubmit="HandleSubmit" IsLoading="true">
         <DataAnnotationsValidator />
         <ValidationSummary />
   
@@ -69,15 +70,8 @@ else
             <label for="author">Author</label>
             <InputText id="author" @bind-Value="doucment.Author" class="form-control"></InputText>
         </div>
-
-        <div class="mt-3 mb-3 float-left">
-            <button type="submit" class="btn btn-primary">@buttonText</button>
-            <button type="button" class="btn btn-danger" @onclick="CancelButtonClick">Cancel</button>
-        </div>
     </EditForm>
-
 }
-
 
 @code {
     string buttonText = string.Empty;
@@ -101,23 +95,26 @@ else
         isLoading = false;
     }
 
-    protected async Task HandleSubmit()
-    {
-        if (Id == null)
-        {
-            await DocumemntService.AddDocument(doucment!);
-        }
-        else
-        {
-            await DocumemntService.UpdateDocument(doucment!);
-        }
-
-        NavigationManager.NavigateTo("documents");
-    }
-
     protected void CancelButtonClick()
     {
         NavigationManager.NavigateTo("documents");
+    }
+
+    private async Task ValidateForm(EditContext editContext)
+    {
+        if (editContext.Validate())
+        {
+            if (Id == null)
+            {
+                await DocumemntService.AddDocument(doucment!);
+            }
+            else
+            {
+                await DocumemntService.UpdateDocument(doucment!);
+            }
+
+            NavigationManager.NavigateTo("documents");
+        }
     }
 
     [Parameter]
