@@ -1,0 +1,45 @@
+﻿
+@* <button class="btn btn-primary" @onclick="@ModalShow">Show Dialog!</button>
+@if (showModal)
+{ *@
+    <div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" aria-labelledby="exampleModalLabel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">@Title</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@ModalCancel"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p>@Text</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="@ModalCancel">Cancel</button>
+                <button type="button" class="btn btn-danger" @onclick=@ModalOk>Delete</button>
+            </div>
+        </div>
+    </div>
+    </div>
+@* } *@
+<hr />
+
+@code
+{
+    private Task ModalCancel() 
+        => OnCancel.InvokeAsync(false);
+
+	private Task ModalOk() 
+        => OnOk.InvokeAsync(true);
+
+    [Parameter] 
+    public string? Title { get; set; }
+	[Parameter] 
+    public string? Text { get; set; }
+	[Parameter] 
+    public EventCallback<bool> OnCancel { get; set; }
+    [Parameter] 
+    public EventCallback<bool> OnOk { get; set; }
+}
