@@ -2,7 +2,14 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, please sign in</h1>
+<AuthorizeView>
+    <Authorized>
+        <h1>Hello, @context?.User?.Identity?.Name</h1>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Hello guest, please sign in</h1>
+    </NotAuthorized>
+</AuthorizeView>
 
 Welcome in new Blazor application to manage documents
 
