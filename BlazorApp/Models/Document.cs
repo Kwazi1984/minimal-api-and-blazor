@@ -19,7 +19,6 @@ namespace BlazorApp.Models
         public int Amount { get; set; }
         [Required]
         public string? Currency { get; set; }
-        [Required]
         public string? Author { get; set; }
     }
 }

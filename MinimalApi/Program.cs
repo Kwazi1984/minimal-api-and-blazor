@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,7 @@ app.UseAuthorization();
 
 app.MapGet("/", () => "Minimal Api Documents is working!");
 
-app.MapGet("/documents", async (DataContext db) =>
+app.MapGet("/documents", [Authorize] async (DataContext db) =>
     await db.Doucments.OrderByDescending(x => x.Id).ToListAsync());
 
 app.MapGet("/documents/{id}", async (int id, DataContext db) =>
@@ -54,15 +55,15 @@ app.MapGet("/documents/{id}", async (int id, DataContext db) =>
             ? Results.Ok(document)
             : Results.NotFound());
 
-app.MapPost("/documents", async (Document document, DataContext db) =>
+app.MapPost("/documents", [Authorize] async (Document document, DataContext db, HttpContext context) =>
 {
     db.Doucments.Add(document);
+    document.Author = context.User.FindFirstValue("preferred_username");
     await db.SaveChangesAsync();
-
     return Results.Created($"/documents/{document.Id}", document);
 });
 
-app.MapPut("/documents/{id}", async (int id, Document inputDocument, DataContext db) =>
+app.MapPut("/documents/{id}", [Authorize] async (int id, Document inputDocument, DataContext db) =>
 {
     var document = await db.Doucments.FindAsync(id);
 
@@ -82,7 +83,7 @@ app.MapPut("/documents/{id}", async (int id, Document inputDocument, DataContext
     return Results.NoContent();
 });
 
-app.MapDelete("/documents/{id}", async (int id, DataContext db) =>
+app.MapDelete("/documents/{id}", [Authorize] async (int id, DataContext db) =>
 {
     if (await db.Doucments.FindAsync(id) is Document documemnt)
     {

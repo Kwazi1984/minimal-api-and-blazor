@@ -1,9 +1,9 @@
 ﻿@page "/edit-document"
 @page "/edit-document/{id:int}"
+@attribute [Authorize]
 
 @inject IDocumentService DocumemntService
 @inject NavigationManager NavigationManager
-
 
 @if (isLoading)
 {
@@ -66,10 +66,6 @@ else
                 <option value="GBP">GBP</option>
             </InputSelect>
         </div>   
-        <div>
-            <label for="author">Author</label>
-            <InputText id="author" @bind-Value="doucment.Author" class="form-control"></InputText>
-        </div>
     </EditForm>
 }
 
