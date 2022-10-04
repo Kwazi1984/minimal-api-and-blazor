@@ -15,19 +15,6 @@ namespace BlazorApp.Services
 
         public async Task<List<Document>?> GetDocuments()
         {
-            // List<Document>? documents = new();
-
-            // try
-            // {
-            //     documents = await _http.GetFromJsonAsync<List<Document>>("documents");
-            // }
-            // catch (AccessTokenNotAvailableException exception)
-            // {
-            //     exception.Redirect();
-            // }
-
-            // return documents;
-
             return await _http.GetFromJsonAsync<List<Document>>("documents");
         }
 

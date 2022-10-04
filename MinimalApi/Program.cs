@@ -30,7 +30,6 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidIssuer = builder.Configuration["Keycloak:AuthorityUrl"],
         ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero,
     };
 });
 builder.Services.AddAuthorization();
