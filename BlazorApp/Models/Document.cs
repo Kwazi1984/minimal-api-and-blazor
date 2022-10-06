@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BlazorApp.Models
+namespace DocumentsBlazor.Models
 {
     public class Document
     {

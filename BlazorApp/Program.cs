@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using BlazorApp;
-using BlazorApp.Services;
+using DocumentsBlazor;
+using DocumentsBlazor.Services;
 using Radzen;
-using BlazorApp.Extensions.AuthorizationHandler;
+using DocumentsBlazor.Extensions.AuthorizationHandler;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

@@ -1,8 +1,8 @@
-using BlazorApp.Models;
+using DocumentsBlazor.Models;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
-namespace BlazorApp.Services
+namespace DocumentsBlazor.Services
 {
     public class DocumentService : IDocumentService
     {
