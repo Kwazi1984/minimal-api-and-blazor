@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "MinimalApi": {
+    "Documents.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
