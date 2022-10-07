@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Documents.Api.Migrations
+namespace AppDocuments.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20220907181137_InitialMigration")]

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
-namespace DocumentsBlazor.Extensions.AuthorizationHandler
+namespace AppDocuments.Blazor.Extensions.AuthorizationHandler
 {
     public class CustomAuthorizationMessageHandler : AuthorizationMessageHandler
     {

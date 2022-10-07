@@ -1,6 +1,6 @@
-using DocumentsBlazor.Models;
+using AppDocuments.Blazor.Models;
 
-namespace DocumentsBlazor.Services
+namespace AppDocuments.Blazor.Services
 {
     public interface IDocumentService
     {

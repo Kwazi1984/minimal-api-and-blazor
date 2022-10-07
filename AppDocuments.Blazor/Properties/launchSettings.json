@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "DocumentsBlazor": {
+    "AppDocuments.Blazor": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
