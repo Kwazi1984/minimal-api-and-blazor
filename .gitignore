@@ -11,8 +11,6 @@ appsettings.Prod.json
 appsettings.Cert.json
 appsettings.Dev.json
 appsettings.Development.json
-appsettings.DevelopmentUI.json
-appsettings.DevelopmentKeycloakDev.json
 appsettings.Production.json
 
 # Build results
@@ -28,15 +26,10 @@ build/
 **/.vs/
 .externalToolBuilders/
 Logs/
-swcm/stronyWCM/MOD_SWCM/UserData
-swcm/packages/
-Start/CONFIG_SERVER.php4
-pdd_TaskReminder/packages/
 **/node_modules/
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
 .settings
-CpWorkflows/.local-chromium/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
