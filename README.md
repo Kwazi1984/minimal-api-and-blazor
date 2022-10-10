@@ -2,10 +2,10 @@
 AppDocuments is a sample application to manage documents which allows create, update, delete and browse registered metadata of documents.
 Project is built with .NET6 MinimalApi as backend and Blazor WebAssembly as frontend. Both of services are secured by openId protocol and jwt authorizarion using 3rd party identity provider which is Keycloak.
 
-![Documents dashboard](https://raw.githubusercontent.com/Kwazi1984/minimal-api-and-blazor/feature/assets/app-screen.jpg)
+![Documents dashboard](https://raw.githubusercontent.com/Kwazi1984/minimalapi-blazor-keycloak/master/assets/app-screen.jpg)
 
 ## Architecture
-![Documents dashboard](https://raw.githubusercontent.com/Kwazi1984/minimal-api-and-blazor/feature/assets/diagram.jpg)
+![Documents dashboard](https://raw.githubusercontent.com/Kwazi1984/minimalapi-blazor-keycloak/master/assets/diagram.jpg)
 
 ## Requirements
 - [docker](https://www.docker.com/)
