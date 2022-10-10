@@ -1,0 +1,13 @@
+﻿@page "/authentication/logged-out"
+
+@inject NavigationManager Navigation
+
+<h3>Logged out</h3>
+You are logged out!
+
+@code {
+    protected override void OnInitialized()
+    { 
+        Navigation.NavigateTo("/");
+    }
+}
