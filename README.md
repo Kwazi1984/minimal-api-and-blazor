@@ -21,7 +21,7 @@ and in projects folders src/AppDocuments.Api and src/AppDocuments.Blazor please 
 ```
 dotnet run
 ```
-To run application in browser, call: [http://localhost:7032](http://localhost:7032)
+To run application in browser, call: [https://localhost:7032](https://localhost:7032)
 
 To sign in use credentials:
 `john.doe/Pass.123` or `mark.williams/Pass.123`
